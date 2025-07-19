@@ -23,6 +23,12 @@ set(GAME_SOURCES
 
 	"MenuStages.cpp"
 	"GameStages.cpp"
+
+	"Hud.cpp"
+	"Player.cpp"
+	"Level.cpp"
+
+	"Random.cpp"
 )
 
 # To be used instead of set(GAME_SOURCES ...)

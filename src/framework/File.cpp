@@ -15,7 +15,12 @@ namespace Framework {
 			json data;
 			try {
 				std::ifstream file(filepath);
-				file >> data;
+				if (file.fail()) {
+					printf("Unable to open file!\n");
+				}
+				else {
+					file >> data;
+				}
 			}
 			catch (const parse_error& error) {
 				printf("Couldn't read file! Error: %s\n", error.what());

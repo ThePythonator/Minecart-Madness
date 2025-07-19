@@ -90,13 +90,16 @@ namespace Framework {
 		SDL_RenderPresent(renderer);
 
 		// If we were too quick, sleep!
-		uint32_t end_time = SDL_GetTicks();
-		uint32_t difference = end_time - start_time;
-		int ticks_to_sleep = static_cast<int>(WINDOW::TARGET_DT * 1000.0f) - difference;
-		if (ticks_to_sleep > 0) {
-			SDL_Delay(ticks_to_sleep);
+		if (WINDOW::LIMIT_FPS) {
+			uint32_t end_time = SDL_GetTicks();
+			uint32_t difference = end_time - start_time;
+			int ticks_to_sleep = static_cast<int>(WINDOW::TARGET_DT * 1000.0f) - difference;
+			if (ticks_to_sleep > 0) {
+				SDL_Delay(ticks_to_sleep);
+			}
 		}
 
+		//printf("Delta: %f\n", dt);
 		//printf("FPS: %f\n", 1.0f / dt);
 
 		return running;

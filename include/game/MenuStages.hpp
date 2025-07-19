@@ -17,7 +17,6 @@ public:
 
 private:
 	Framework::Timer intro_timer;
-	Framework::Text intro_text;
 };
 
 class TitleStage : public Framework::BaseStage {
@@ -28,5 +27,6 @@ public:
 	void render();
 
 private:
+	Framework::Text title_text;
 	Framework::Timer _timer;
 };

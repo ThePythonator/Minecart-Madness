@@ -1,12 +1,16 @@
 #pragma once
 
-#include "BaseStage.hpp"
+#include <optional>
 
 #include "Constants.hpp"
 
+#include "BaseStage.hpp"
 #include "MenuStages.hpp"
-
 #include "Animation.hpp"
+
+#include "Player.hpp"
+#include "Level.hpp"
+#include "Hud.hpp"
 
 class GameStage : public Framework::BaseStage {
 public:
@@ -16,8 +20,10 @@ public:
 	void render();
 
 private:
-	std::unique_ptr<Framework::AnimationInterface> spinning_sword;
-	std::unique_ptr<Framework::AnimationInterface> big_animation;
+	// Use std::unique_ptr so that we can delay construction without needing default ctors
+	std::optional<Player> player;
+	std::optional<Level> level;
+	std::optional<Hud> hud;
 };
 
 class PausedStage : public Framework::BaseStage {

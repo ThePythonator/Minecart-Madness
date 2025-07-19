@@ -3,8 +3,6 @@
 // IntroStage
 
 void IntroStage::start() {
-	intro_text = Framework::Text(&graphics_objects->fonts[GRAPHICS_OBJECTS::FONTS::MAIN_FONT], "Some intro text", COLOURS::BLACK);
-
 	intro_timer.stop();
 
 	// Start transition
@@ -36,10 +34,11 @@ bool IntroStage::update(float dt) {
 }
 
 void IntroStage::render() {
-	graphics_objects->graphics.fill(COLOURS::BLUE);
+	graphics_objects->graphics.fill(COLOURS::BLACK);
 
-	// Display some intro text in the centre of the display
-	intro_text.render(WINDOW::SIZE_HALF);
+	// Display the Scorpion Games logo
+	Framework::vec2 logo_pos = WINDOW::SIZE_HALF / SPRITES::LOGO_SCALE - SPRITES::RECT::LOGO.size / 2;
+	graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].rect(SPRITES::RECT::LOGO, logo_pos, SPRITES::LOGO_SCALE);
 
 	transition->render();
 }
@@ -61,6 +60,9 @@ void TitleStage::start() {
 		Framework::Text(&graphics_objects->fonts[GRAPHICS_OBJECTS::FONTS::MAIN_FONT], "Quit", COLOURS::BLACK, 4.0f),
 		BUTTONS::TITLE::QUIT
 	);
+
+	// Create title text
+	title_text = Framework::Text(&graphics_objects->fonts[GRAPHICS_OBJECTS::FONTS::MAIN_FONT], STRINGS::TITLE, COLOURS::BLACK, 8);
 
 	// Set transition
 	set_transition(graphics_objects->transition_ptrs[GRAPHICS_OBJECTS::TRANSITIONS::FADE_TRANSITION].get());
@@ -109,15 +111,18 @@ bool TitleStage::update(float dt) {
 void TitleStage::render() {
 	graphics_objects->graphics.fill(COLOURS::BLUE);
 
-	graphics_objects->graphics.render_circle(Framework::Vec(20, 20), 10, COLOURS::BLACK);
-	graphics_objects->graphics.render_rect(Framework::Rect(40, 20, 10, 30), COLOURS::BLACK);
+	// Display title text in the centre of the display
+	title_text.render({ WINDOW::SIZE.x * 0.5f, WINDOW::SIZE.y * 0.25f });
 
-	graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(0, Framework::Vec(64, 48));
+	//graphics_objects->graphics.render_circle(Framework::Vec(20, 20), 10, COLOURS::BLACK);
+	//graphics_objects->graphics.render_rect(Framework::Rect(40, 20, 10, 30), COLOURS::BLACK);
 
-	graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(2, Framework::Vec(16, 48));
-	graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(2, Framework::Vec(32, 48), Framework::SpriteTransform::ROTATE_90_ACW);
+	//graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(0, Framework::Vec(64, 48));
 
-	graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(1, Framework::Vec(96, 48), SPRITES::SCALE, _timer.time() * 90);
+	//graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(2, Framework::Vec(16, 48));
+	//graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(2, Framework::Vec(32, 48), Framework::SpriteTransform::ROTATE_90_ACW);
+
+	//graphics_objects->spritesheets[GRAPHICS_OBJECTS::SPRITESHEETS::MAIN_SPRITESHEET].sprite(1, Framework::Vec(96, 48), SPRITES::SCALE, _timer.time() * 90);
 
 	for (const Framework::Button& button : buttons) {
 		button.render();

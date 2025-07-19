@@ -16,4 +16,6 @@ private:
 
 	void load_data();
 	void clear_data();
+
+	std::string BASE_PATH;
 };

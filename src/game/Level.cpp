@@ -5,7 +5,8 @@ Level::Level(Framework::GraphicsObjects* _graphics_objects, uint32_t _seed)
 	, seed(_seed)
 	, random(_seed)
 	, wfc(WaveFunctionCollapse::create_from_file(
-		// Add 1 tile to the left side to allow chunks to be stitched together
+		// Add 1 tiles to the left side to allow chunks to be stitched together
+		// Add 2 tiles to the right side to ensure a valid chunk is generated (ensure it is continuable)
 		GAME::CHUNK_TILE_WIDTH + 2, GAME::CHUNK_TILE_HEIGHT,
 		graphics_objects->base_path + PATHS::LEVEL_DATA::LOCATION + PATHS::LEVEL_DATA::TERRAIN_GENERATION_DATA
 	)) {
@@ -14,7 +15,7 @@ Level::Level(Framework::GraphicsObjects* _graphics_objects, uint32_t _seed)
 
 void Level::update(float dt, const Framework::vec2& player_position, Framework::InputHandler* input) {
 	// Check which chunks need to be loaded
-	float left_edge = player_position.x - GAME::PLAYER_POSITION;
+	float left_edge = player_position.x - GAME::PLAYER::STARTING_POSITION.x;
 	float right_edge = left_edge + WINDOW::SIZE.x / SPRITES::SCALE;
 	uint32_t leftmost_chunk_id = static_cast<uint32_t>(left_edge / GAME::CHUNK_WIDTH);
 	uint32_t rightmost_chunk_id = static_cast<uint32_t>(right_edge / GAME::CHUNK_WIDTH) + 1;

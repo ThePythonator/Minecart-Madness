@@ -24,6 +24,8 @@ private:
 	std::optional<Player> player;
 	std::optional<Level> level;
 	std::optional<Hud> hud;
+
+	bool _first_time = true;
 };
 
 class PausedStage : public Framework::BaseStage {

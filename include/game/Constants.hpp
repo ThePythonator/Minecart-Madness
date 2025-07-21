@@ -193,16 +193,21 @@ namespace GAME {
 	constexpr uint32_t CHUNK_HEIGHT = CHUNK_TILE_HEIGHT * SPRITES::SIZE;
 	constexpr uint32_t CHUNK_WIDTH = CHUNK_TILE_WIDTH * SPRITES::SIZE;
 
-	constexpr float PLAYER_POSITION = 0.33f * WINDOW::SIZE.x / SPRITES::SCALE;
 
 	constexpr uint32_t MAX_COLLAPSE_ATTEMPTS = 1000;
 	constexpr uint32_t MAX_RESTART_ATTEMPTS = 10;
 
 	namespace PLAYER {
+		constexpr Framework::vec2 STARTING_POSITION = cmul(Framework::vec2{ 0.33f, 0.48f }, WINDOW::SIZE) / SPRITES::SCALE;
+
 		constexpr uint8_t HEALTH = 3;
 
-		constexpr float ACCELERATION = 30.0f;
-		constexpr float DRAG_COEFFICIENT = 0.01f;
-		constexpr float GRAVITY = 120.0f;
+		constexpr float ACCELERATION = 4.0f;
+		constexpr float DRAG_COEFFICIENT = 0.0002f;
+		constexpr float BRAKING_DRAG_COEFFICIENT = 0.005f;
+		constexpr float GRAVITY = 320.0f;
+
+		// Speed of rotation in degrees per second
+		constexpr float FALL_ROTATE_SPEED = 90.0f;
 	}
 }

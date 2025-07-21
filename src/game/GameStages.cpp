@@ -6,13 +6,17 @@ void GameStage::start() {
 	// Set transition
 	set_transition(graphics_objects->transition_ptrs[GRAPHICS_OBJECTS::TRANSITIONS::FADE_TRANSITION].get());
 
-	// Start transition
-	transition->open();
+	if (_first_time) {
+		_first_time = false;
 
-	// Create Player and Hud instances
-	player = Player(graphics_objects);
-	level.emplace(graphics_objects, 6); // TODO: change seed, e.g. to level number? or randomly generated
-	hud = Hud(graphics_objects);
+		// Start transition
+		transition->open();
+
+		// Create Player and Hud instances
+		player = Player(graphics_objects);
+		level.emplace(graphics_objects, 0); // TODO: change seed, e.g. to level number? or randomly generated
+		hud = Hud(graphics_objects);
+	}
 }
 
 bool GameStage::update(float dt) {
@@ -72,7 +76,9 @@ bool PausedStage::update(float dt) {
 	transition->update(dt);
 
 	if (input->just_down(Framework::KeyHandler::Key::ESCAPE) || input->just_down(Framework::KeyHandler::Key::P)) {
-		transition->close();
+		// Return to game (exit pause)
+		finish(_background_stage);
+		//transition->close();
 	}
 
 	// Update buttons
@@ -81,17 +87,20 @@ bool PausedStage::update(float dt) {
 
 		if (button.pressed() && transition->is_open()) {
 			button_selected = button.get_id();
-			transition->close();
+			if (button_selected == BUTTONS::PAUSED::RESUME) {
+				// Return to game (exit pause)
+				finish(_background_stage);
+				//transition->close();
+			}
+			else {
+				transition->close();
+			}
 		}
 	}
 
 	if (transition->is_closed()) {
 		if (button_selected == BUTTONS::PAUSED::EXIT) {
 			finish(new TitleStage());
-		}
-		else {
-			// Return to game (exit pause)
-			finish(_background_stage);
 		}
 	}
 

@@ -1,6 +1,10 @@
 #pragma once
 
+#include <cmath>
+#include <numbers>
+
 #include "GraphicsObjects.hpp"
+#include "Timer.hpp"
 
 #include "Constants.hpp"
 
@@ -18,8 +22,15 @@ public:
 
 private:
 	Framework::vec2 position, velocity;
-	uint8_t health = GAME::PLAYER::HEALTH;
-	bool on_rail = false;
+	uint8_t health;
+	bool on_rail;
+	float angle;
+
+	struct Wheels {
+		float left_y, right_y;
+	} wheels;
+
+	Framework::Timer start_delay;
 
 	Framework::GraphicsObjects* graphics_objects;
 };
